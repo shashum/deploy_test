@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ko">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+        <style>
+            table {
+              width: 40%;
+              
+              border-collapse: collapse;
+            }
+            th, td {
+              
+              padding: 5px;
+            }
+          </style>
+    </head>
+
+
+<body>
+    <center><h1>{{post.title}}</h1></center>
+    <div>
+        
+        <a href="{% url 'edit' post.id %}">수정 | </a>
+        <a href="{% url 'delete' post.id %}" onclick="return confirm('삭제?')">삭제 | </a>
+        <a href="{% url 'home' %}">홈으로</a>
+        <hr>
+        <center>{{post.text}}</center>
+    </div>    
+    
+    <hr>
+
+    <p>댓글 {{ post.comments.count }} 개</p>
+
+    {% for comment in post.comments.all %}
+    <div>
+        <p>닉네임  : {{comment.nickname}} <a href="{% url 'delete_comment' comment_id=comment.id %}" onclick="return confirm('삭제?')">댓글 삭제</a></p>
+        <p>내용 : {{comment.text|linebreaks}}</p>    
+    </div>
+    <hr>
+    {% empty %}
+    <p>아무 댓글이 없어요 ㅠ</p>
+    {% endfor %}
+
+   
+    
+    <table>
+        <thead>
+            <form method="POST" action="{% url 'add_comment' post.id %}">
+            <th><h4>댓글 작성</h4></th>
+          <tr>
+              {% csrf_token %}
+            <th>{{ form.as_p }}</th>
+            <th><button type="submit" class="save tn bbtn-default">작성</button></th>
+          </tr>
+          </form>
+        </thead>
+      </table>
+        
+   
+</body>
+
+
+</html>

@@ -1,0 +1,14 @@
+<div class = "container">
+    <h1>회원가입</h1>
+
+
+<form method="POST", action="{% url 'accounts:signup' %}">
+    {% csrf_token %}
+    {{ userform.as_p }}
+    <input type="submit" value='sign up'>
+    <br>
+    <p></p>
+    <a href="{% url 'home' %}">홈으로 가기</a>
+</form>
+
+</div>
