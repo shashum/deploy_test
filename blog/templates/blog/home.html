@@ -23,7 +23,29 @@
             font:bold 12px ;                    
             padding:0 5px;                       
         }
-         nav ul li:first-child{border-left:none;}    
+         nav ul li:first-child{border-left:none;}   
+
+        
+         #jb-top {
+        
+        padding: 20px;
+        margin-bottom:0px;
+        float: right;
+      }
+
+         #jb-content {
+        
+        padding: 20px;
+        margin-bottom:500px;
+        float: center;
+        border: 1px solid #bcbcbc;
+      }
+
+      #jb-footer {
+        clear: both;
+        padding: 20px;
+        border: 1px solid #bcbcbc;
+      }
     </style>
 </head>
 
@@ -36,9 +58,10 @@
             <p>{{ user.username }}님 {{ user.nickname }} 반갑습니다.</p>
             <p><a href="{% url 'logout' %}">로그아웃</a></p>
             {% else %}
+            <div id="jb-top">
             <li><a href="{% url 'accounts:signup' %}">회원가입</a></li>
             <li><a href="{% url 'login' %}">로그인</a></li>
-            
+        </div>
             <br>
             <p></p>
             <p>로그인 되지 않음</p>
@@ -52,52 +75,37 @@
 
 <body>
     <hr>
-    
-    {% for post in posts.all %}
-        <center>
+    <center>
+    <div id="jb-content">
+        <h2>Content</h2>
+        {% for post in posts.all %}
 
         <div>
             {% if user.is_authenticated %}
-            <h2><a href="{% url 'detail' post.id %}">{{post.title}}</a></h2>
+            <h2><a href="{% url 'detail' post.id %}">{{post.summary}}...</a></h2>
             {% else %}
-            <h2><a href="{% url 'login' %}">{{post.title}}</a></h2>
+            <h2><a href="{% url 'login' %}">{{post.summary}}</a></h2>
             {% endif %}
-            <p>{{ post.text|slice:":6" }}...</p>
+            <p> {{post.text|truncatechars:6}}</p>
             <p>{{ post.created_date }}</p>
         
         </div>
         <hr>
     {% endfor %}
-  
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-
-    <h3><a href="{% url 'new' %}">글쓰기</a></h3>
+      </div>
     
+  
+      
+  
+      <div id="jb-footer">
+            {% if user.is_authenticated %}
+        <h3><a href="{% url 'new' %}">글쓰기</a></h3>
+        {% else %}
+        <h2><a href="{% url 'login' %}">글쓰기</a></h2>
+        {% endif %}
+      </div>
+      <br>
+      <br>
   
 </center>
 

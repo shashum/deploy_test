@@ -35,7 +35,7 @@
         <a href="{% url 'delete' post.id %}" onclick="return confirm('삭제?')">삭제 | </a>
         <a href="{% url 'home' %}">홈으로</a>
         <hr>
-        <center>{{post.text}}</center>
+        <center>{{post.text|linebreaks}}</center>
     </div>    
     
     <hr>
